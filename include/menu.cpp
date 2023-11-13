@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-#include "../include/menu.h"
+#include "menu.h"
 
 
 
