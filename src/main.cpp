@@ -11,10 +11,11 @@ int main()
 //                       "2. Add Beep Card Load"});
 
     Menu panel = Menu(10,
-                      8,
+                      17,
                       "Welcome to TCATS",
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat orci imperdiet, fringilla augue id, vehicula tellus. extra line needed for this test");
 //                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat orci imperdiet, fringilla augue id, vehicula tellus.");
-                      "Test a longer message needed lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+//                      "Test a longer message needed lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 //                    "test");
 
     panel.Print();

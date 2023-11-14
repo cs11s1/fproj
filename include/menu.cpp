@@ -29,14 +29,16 @@ void Menu::Print() {
     // Function Variables
     std::string _wrappedDescription = this-> description;
     std::string _menuBorder = this->CreateBorder();
-    int _contentSize;
     int _menuMiddle = (this->menuHeight / 2);
+    int _widthPadding = 5;
+    int _contentSize;
 
-    int _descLines = static_cast<int>(_wrappedDescription.size() / (_menuBorder.size()));
-    std::string _wrappedLinesArray[_descLines+1];
+    int _descLines = 1 + static_cast<int>(_wrappedDescription.size() / (_menuBorder.size()));
+    std::string _wrappedLinesArray[_descLines];
 
-    // Add 1 if the menu height is ODD
-    _menuMiddle += this->menuHeight % 2;
+    // Add 1 if the menu height is EVEN
+//    _menuMiddle += !(this->menuHeight % 2);
+//    _menuMiddle += 1;
 
     std::cout << _menuBorder;
 
@@ -44,21 +46,21 @@ void Menu::Print() {
     // - If it is, search for end of the last word before the menu width
     //   and add "\n"
     // - Keep track of the total lines using `_descLines` variable
-    if (this->description.size() > _menuBorder.size() - 2)
+    if (_descLines > 1)
     {
         // Cast to `int` (value is originally an `unsigned long`, which causes a Narrowing Conversion warning)
-        for (int i = 1; i <= _descLines; i++)
+        std::size_t fpos = _wrappedDescription.rfind(' ', (_menuBorder.size()-_widthPadding))+1;
+        _wrappedLinesArray[0] = _wrappedDescription.substr(0, fpos);
+        for (int i = _descLines; i > 1; i--)
         {
             // TODO: research std::size_t and std::string::npos
-            std::size_t pos = _wrappedDescription.rfind(' ', (_menuBorder.size())*i)+1;
+            std::size_t pos = _wrappedDescription.rfind(' ', (_menuBorder.size()-_widthPadding)*(i-1))+1;
+            std::size_t epos = _wrappedDescription.rfind(' ', (_menuBorder.size()-_widthPadding)*(i))+1;
             if (pos != std::string::npos)
             {
 //                _wrappedDescription.insert(pos, "\n");
                 std::string temp;
-                for (int j = (int) pos; j > 0; j--)
-                {
-                    temp += _wrappedDescription[j];
-                }
+                temp =  _wrappedDescription.substr(pos, epos-pos);
                 _wrappedLinesArray[i-1] = temp;
             }
             else
@@ -69,8 +71,8 @@ void Menu::Print() {
     }
 
     // Total lines of text inside the menu
-    // 3 = title + whitespace + one description line
-    _contentSize = 3 + _descLines;
+    // 2 = title + whitespace + description lines
+    _contentSize = 2 + _descLines;
 
     // Handling on content larger than menu height
     if (_contentSize > this->menuHeight)
@@ -85,19 +87,15 @@ void Menu::Print() {
     for (int i = 0, j = 0; i <= this->menuHeight; i++)
     {
         // Top of the content (in the middle of the menu)
-        if (i == _menuMiddle - _contentSize/2)
+        if (i == _menuMiddle - 2)
         {
             std::cout << this->title;
         }
 
         // Start of Description
-        if (i == (_menuMiddle + 1))
-        {
-            if (sizeof(_wrappedLinesArray) > 0)
-            {
-                std::cout << _wrappedLinesArray[j];
-                j++;
-            }
+        if (i >= _menuMiddle && j < _descLines) {
+            std::cout << _wrappedLinesArray[j];
+            j++;
         }
         std::cout << std::endl;
     }
