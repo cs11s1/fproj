@@ -36,9 +36,6 @@ void Menu::Print() {
     int _descLines = 1 + static_cast<int>(_wrappedDescription.size() / (_menuBorder.size()));
     std::string _wrappedLinesArray[_descLines];
 
-    // Add 1 if the menu height is EVEN
-//    _menuMiddle += !(this->menuHeight % 2);
-//    _menuMiddle += 1;
 
     std::cout << _menuBorder;
 
@@ -48,7 +45,6 @@ void Menu::Print() {
     // - Keep track of the total lines using `_descLines` variable
     if (_descLines > 1)
     {
-        // Cast to `int` (value is originally an `unsigned long`, which causes a Narrowing Conversion warning)
         std::size_t fpos = _wrappedDescription.rfind(' ', (_menuBorder.size()-_widthPadding))+1;
         _wrappedLinesArray[0] = _wrappedDescription.substr(0, fpos);
         for (int i = _descLines; i > 1; i--)
