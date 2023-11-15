@@ -5,6 +5,7 @@ cmake-build-debug/
 build/
 out/
 main
+CMakeSettings.json
 
 
 
