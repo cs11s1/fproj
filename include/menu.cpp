@@ -34,7 +34,9 @@ void Menu::Print() {
     int _contentSize, _marginSize;
 
     int _descLines = 1 + static_cast<int>(_wrappedDescription.size() / (_menuBorder.size()));
-    std::string _wrappedLinesArray[_descLines];
+
+    // Vector because can't initialize an array if the size specifier is not a compile time constant
+    std::vector<std::string> _wrappedLinesArray(_descLines);
 
 
     std::cout << _menuBorder;
