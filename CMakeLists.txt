@@ -4,6 +4,5 @@ project(fproj)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(fproj src/main.cpp
-        include/menu.h
-        include/menu.cpp
+        include/main.h
 )
