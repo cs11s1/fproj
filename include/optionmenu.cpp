@@ -4,8 +4,16 @@
 
 #include "optionmenu.h"
 
-OptionMenu::OptionMenu(int menuWidth, int menuHeight, std::string title, std::string description, const std::vector<std::string>& optionList)
+OptionMenu::OptionMenu(int menuWidth, int menuHeight, std::string title, std::string description, std::vector<std::string>options)
 : Menu(menuWidth, menuHeight, std::move(title), std::move(description))
 {
 
-};
+}
+
+OptionMenu::OptionMenu(int menuWidth, int menuHeight, std::string title, std::string description) : Menu(menuWidth,
+                                                                                                         menuHeight,
+                                                                                                         title,
+                                                                                                         description){
+
+}
+

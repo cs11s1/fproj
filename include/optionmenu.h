@@ -12,7 +12,10 @@
 
 class OptionMenu : public Menu {
 public:
-    OptionMenu(int menuWidth, int menuHeight, std::string title, std::string description, const std::vector<std::string>& optionList);
+    OptionMenu(int menuWidth, int menuHeight, std::string title, std::string description, std::vector<std::string>);
+
+    OptionMenu(int menuWidth, int menuHeight, std::string title, std::string description);
+
 private:
     std::vector<std::string> optionList;
 };
