@@ -1,8 +1,7 @@
 #include "../include/main.h"
-
+#include "../include/mainmenu.h"
 int main()
 {
-    // For now, only use this file to test functions, do not explicitly write code here.
-
+    mainmenu();
     return 0;
 }
