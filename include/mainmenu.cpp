@@ -10,49 +10,94 @@ void ticket(){
     int lrt2Count = 13;
     int lrtCount = 20;
     int mrtCount = 13;
-    int line;
+    int line, orig = 0, selec = 1;
 
-    cout << "Select a train line: "<< endl;
-    cout << "[1] LRT-1"<< endl;
-    cout << "[2] LRT-2"<< endl;
-    cout << "[3] MRT"<< endl;
+    do{
+        cout << endl << "Select a train line: "<< endl;
+        cout << "[1] LRT-1"<< endl;
+        cout << "[2] LRT-2"<< endl;
+        cout << "[3] MRT"<< endl;
+        cout << "Insert Line Number: ";
+        cin >> line;
+        switch(line){
+        case 1:
+            cout << endl << "LRT-1 Destinations: " << endl;
+            for (int x=0; x<lrtCount; x++){
+                cout << x + 1 << ". " << lrt[x] << endl;
+            }
+            cout << "Insert Station Number: ";
+            cin >> selec;
 
-    cin >> line;
-    switch(line){
-    case 1:
-        cout << "LRT-1 Destinations: " << endl;
-        for (int x=0; x<lrtCount; x++){
-            cout << x + 1 << ". " << lrt[x] << endl;
+            cout << endl << "Select your current station: " << endl;
+            for (int x=0; x<lrtCount; x++){
+                cout << x + 1 << ". " << lrt[x] << endl;
+            }
+            cout << "Insert Station Number: ";
+            cin >> orig;
+            if (orig != selec){
+                cout << endl << "Riding Train To: " << lrt[selec-1] << endl;
+                cout << "Riding Train From: " << lrt[orig-1] << endl;
+            }
+            break;
+        case 2:
+            cout << endl << "LRT-2 Destinations: " << endl;
+            for (int y=0; y<lrt2Count; y++){
+                cout << y + 1 << ". " << lrt2[y] << endl;
+            }
+            cout << "Insert Station Number: ";
+            cin >> selec;
+
+            cout << endl << "Select your current station: " << endl;
+            for (int y=0; y<lrt2Count; y++){
+                cout << y + 1 << ". " << lrt2[y] << endl;
+            }
+            cout << "Insert Station Number: ";
+            cin >> orig;
+            if (orig != selec){
+                cout << endl << "Riding Train To: " << lrt2[selec-1] << endl;
+                cout << "Riding Train From: " << lrt2[orig-1] << endl;
+            }
+            break;
+        case 3:
+            cout << endl << "MRT Destinations: " << endl;
+            for (int z=0; z<mrtCount; z++){
+                cout << z + 1 << ". " << mrt[z] << endl;
+            }
+            cout << "Insert Station Number: ";
+            cin >> selec;
+
+            cout << endl << "Select your current station: " << endl;
+            for (int z=0; z<mrtCount; z++){
+                cout << z + 1 << ". " << mrt[z] << endl;
+            }
+            cout << "Insert Station Number: ";
+            cin >> orig;
+            if (orig != selec){
+                cout << endl << "Riding Train To: " << mrt[selec-1] << endl;
+                cout << "Riding Train From: " << mrt[orig-1] << endl;
+            }
+            break;
+        default:
+            cout << "Invalid Option" << endl;
+            break;
         }
-        break;
-    case 2:
-        cout << "LRT-2 Destinations: " << endl;
-        for (int y=0; y<lrt2Count; y++){
-            cout << y + 1 << ". " << lrt2[y] << endl;
+        if (orig == selec){
+            cout << "DESTINATION CANNOT BE THE SAME WITH CURRENT STATION! (ERROR)" << endl << endl;
         }
-        break;
-    case 3:
-        cout << "MRT Destinations: " << endl;
-        for (int z=0; z<mrtCount; z++){
-            cout << z + 1 << ". " << mrt[z] << endl;
-        }
-        break;
-    default:
-        cout << "Invalid Option";
-        break;
-    }
+    }while (orig == selec || line > 3);
+    
 }
 
 void mainmenu(){
     int options;
-    cout << "Train Ticketing System";
+    cout << "Train Ticketing System" << endl << endl;
 
     cout << "Options: " << endl;
     cout << "[1] Purchase a Ticket"<< endl;
     cout << "[2] Reload Card Balance"<< endl;
     cout << "[3] Buy Beep Card (Out of Stock)"<< endl;
     cout << "[4] Account"<< endl;
-    
+    cout << "Insert Option Number: ";
     cin >> options;
     switch (options){
         case 1: 
@@ -67,10 +112,10 @@ void mainmenu(){
         case 4: 
             break;
         default: 
-            cout << "Invalid Option";
+            cout << "Invalid Option" << endl;
             break;
     }
-    
+    cout << endl << "Transaction Success!!! Thank you come again!!";
 }
 
 void reload(){
