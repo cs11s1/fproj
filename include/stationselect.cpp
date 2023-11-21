@@ -3,7 +3,7 @@
 using namespace std;
 
 
-int main(){
+int StationSelect(){
     
 int stn, x, no, dest, stn2, dest2;
 char conf;
