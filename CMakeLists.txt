@@ -7,4 +7,6 @@ add_executable(fproj src/main.cpp
         include/main.h
         include/mainmenu.h
         include/mainmenu.cpp
+        include/login.h
+        include/login.cpp
 )
