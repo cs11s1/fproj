@@ -4,7 +4,6 @@
 
 int main()
 {
-    StationSelect();
-    //mainmenu();
+    MainMenu();
     return 0;
 }
