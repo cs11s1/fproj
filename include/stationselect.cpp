@@ -4,9 +4,8 @@ using namespace std;
 
 int StationSelect()
 {
-
     int stn, x, y, z, no, dest, stn2, dest2;
-    char conf;
+    string conf;
     string save, saveout, saveout2, saveloc, save2, confirans;
     string selLine[1];
     string line[3] = {"LRT1", "LRT2", "MRT3"};
@@ -16,8 +15,8 @@ int StationSelect()
     string LRT2[13] = {"Recto", "Legarda", "Pureza", "V. Mapa", "J. Ruiz", "Gilmore", "Betty Go", "Cubao", "Anonas", "Katipunan", "Santolan", "Marikina", "Antipolo"};
     string MRT3[13] = {"North Avenue", "Quezon Avenue", "Kamuning", "Cubao", "Santolan Anapolis", "Ortigas", "Shaw Boulevard", "Boni Ave", "Guadalupe", "Buendia", "Ayala Ave", "Magallanes", "Taft"};
 
-    cout << "Select Station: " << endl;
-    for (z = 0; z <= 2; z++)
+    cout << "\nSelect Station: " << endl;
+    for (z = 0; z < 3; z++)
     {
         cout << num[z] << line[z] << endl;
     }
@@ -33,13 +32,13 @@ int StationSelect()
 
     case 1:
     {
-        cout << "\n Station:" << line[stn - 1] << endl;
+        cout << "\nStation:" << line[stn - 1] << endl;
 
-        for (x = 0; x <= 19; x++)
+        for (x = 0; x < 20; x++)
         {
             cout << num[x] << " " << LRT1[x] << endl;
         }
-        cout << "\nchoose yer destination 1 fuckass: ";
+        cout << "\nChoose Origin Station: ";
         cin >> dest;
 
         switch (dest)
@@ -167,6 +166,7 @@ int StationSelect()
         default:
         {
             cout << "Invalid Location";
+            StationSelect();
         }
         break;
         }
@@ -175,12 +175,12 @@ int StationSelect()
 
     case 2:
     {
-        cout << "\n Station:" << line[stn - 1] << endl;
-        for (x = 0; x <= 13; x++)
+        cout << "\nStation:" << line[stn - 1] << endl;
+        for (x = 0; x < 13; x++)
         {
             cout << num[x] << " " << LRT2[x] << endl;
         }
-        cout << "\nchoose yer destination fuckass: ";
+        cout << "\nChoose Origin Station: ";
         cin >> dest;
 
         switch (dest)
@@ -266,6 +266,7 @@ int StationSelect()
         default:
         {
             cout << "Invalid Location";
+            StationSelect();
         }
         break;
         }
@@ -274,12 +275,12 @@ int StationSelect()
 
     case 3:
     {
-        cout << "\n Station:" << line[stn - 1] << endl;
-        for (x = 0; x <= 12; x++)
+        cout << "\nStation:" << line[stn - 1] << endl;
+        for (x = 0; x < 13; x++)
         {
             cout << num[x] << " " << MRT3[x] << endl;
         }
-        cout << "\nchoose yer destination fuckass: ";
+        cout << "\nChoose Origin Station: ";
         cin >> dest;
 
         switch (dest)
@@ -365,24 +366,27 @@ int StationSelect()
         default:
         {
             cout << "Invalid Location";
+            StationSelect();
         }
         break;
         } // end of dest switch
     }
     break; // end of case
-    }
 
-    cout << "\nChoose 2nd destination." << endl;
+    default:
+        StationSelect();
+        break;
+    }
 
     if (stn == 1)
     {
-        cout << "\n Station:" << line[stn - 1] << endl;
+        cout << "\nStation:" << line[stn - 1] << endl;
 
-        for (x = 0; x <= 19; x++)
+        for (x = 0; x < 20; x++)
         {
             cout << num[x] << " " << LRT1[x] << endl;
         }
-        cout << "\nchoose yer destination 1 fuckass: ";
+        cout << "\nChoose Destination Station: ";
         cin >> dest2;
 
         switch (dest2)
@@ -510,6 +514,7 @@ int StationSelect()
         default:
         {
             cout << "Invalid Location";
+            StationSelect();
         }
         break;
         }
@@ -517,12 +522,12 @@ int StationSelect()
 
     else if (stn == 2)
     {
-        cout << "\n Station:" << line[stn - 1] << endl;
-        for (x = 0; x <= 13; x++)
+        cout << "\nStation:" << line[stn - 1] << endl;
+        for (x = 0; x < 13; x++)
         {
             cout << num[x] << " " << LRT2[x] << endl;
         }
-        cout << "\nchoose yer destination fuckass: ";
+        cout << "\nChoose Destination Station: ";
         cin >> dest2;
 
         switch (dest2)
@@ -608,6 +613,7 @@ int StationSelect()
         default:
         {
             cout << "Invalid Location";
+            StationSelect();
         }
         break;
         }
@@ -615,12 +621,12 @@ int StationSelect()
 
     else if (stn == 3)
     {
-        cout << "\n Station:" << line[stn - 1] << endl;
-        for (x = 0; x <= 12; x++)
+        cout << "\nStation:" << line[stn - 1] << endl;
+        for (x = 0; x < 13; x++)
         {
             cout << num[x] << " " << MRT3[x] << endl;
         }
-        cout << "\nchoose yer destination fuckass: ";
+        cout << "\nChoose Destination Station: ";
         cin >> dest2;
 
         switch (dest2)
@@ -706,6 +712,7 @@ int StationSelect()
         default:
         {
             cout << "Invalid Location";
+            StationSelect();
         }
         break;
         } // end of dest switch
@@ -713,20 +720,23 @@ int StationSelect()
 
     cout << "Is this correct? [Y/N]" << endl;
     cout << "From: " << save << "\nto: " << save2 << endl;
-    cout << "Answer: ";
+    cout << "Confirm: ";
     cin >> conf;
 
-    if (conf == 'Y' or conf == 'y')
+    if (conf == "Y" || conf == "y")
     {
         stats[0] = save;
         stats[1] = save2;
     }
-    else if (conf == 'N' or conf == 'n')
+    else if (conf == "N" || conf == "n")
     {
-        cout << "k go fuck urself ig";
+        StationSelect();
+        // cout << "Returning...";
     }
     else
     {
-        cout << "Cant even fucking type Y or N??";
+        conf = 'b';
+        StationSelect();
+        // cout << "Invalid Input";
     }
 }
