@@ -2,14 +2,14 @@
 
 using namespace std;
 
-int StationSelect()
+string* StationSelect()
 {
     int stn, x, y, z, no, dest, stn2, dest2;
     string conf;
     string save, saveout, saveout2, saveloc, save2, confirans;
     string selLine[1];
     string line[3] = {"LRT1", "LRT2", "MRT3"};
-    string stats[2];
+    string stats[3];
     string num[20] = {"1. ", "2. ", "3. ", "4. ", "5. ", "6. ", "7. ", "8. ", "9. ", "10. ", "11. ", "12. ", "13. ", "14. ", "15. ", "16. ", "17. ", "18. ", "19. ", "20. "};
     string LRT1[20] = {"Roosevelt", "Balintawak", "Yamaha Monumento", "5th Avenue", "R. Papa", "Abad Santos", "Bluementritt", "Tayuman", "Bambang", "Doroteo Jose", "Carriedo", "Central Terminal", "United Nations", "Pedro Gil", "Quirino", "Vito Cruz", "Gil Puyat", "Libertad", "EDSA", "Baclaran"};
     string LRT2[13] = {"Recto", "Legarda", "Pureza", "V. Mapa", "J. Ruiz", "Gilmore", "Betty Go", "Cubao", "Anonas", "Katipunan", "Santolan", "Marikina", "Antipolo"};
@@ -727,6 +727,7 @@ int StationSelect()
     {
         stats[0] = save;
         stats[1] = save2;
+        return stats;
     }
     else if (conf == "N" || conf == "n")
     {
