@@ -2,4 +2,4 @@
 
 void ticket();
 void reload();
-void mainmenu();
+void MainMenu();
