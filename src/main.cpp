@@ -1,7 +1,9 @@
 #include "../include/main.h"
 #include "../include/mainmenu.h"
+#include "../include/stationselect.h"
 int main()
 {
-    mainmenu();
+    StationSelect();
+    //mainmenu();
     return 0;
 }
