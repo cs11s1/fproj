@@ -1,11 +1,8 @@
-#include <iostream>
+#include "stationselect.h"
 
 using namespace std;
 
-string saveddest1(string);
-string saveddest2(string);
-
-int main()
+int StationSelect()
 {
 
     int stn, x, y, z, no, dest, stn2, dest2;
