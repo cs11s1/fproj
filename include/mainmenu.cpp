@@ -88,7 +88,7 @@ void ticket(){
     
 }
 
-void mainmenu(){
+void MainMenu(){
     int options;
     cout << "Train Ticketing System" << endl << endl;
 

@@ -9,4 +9,6 @@ add_executable(fproj src/main.cpp
         include/mainmenu.cpp
         include/login.h
         include/login.cpp
+        include/stationselect.cpp
+        include/stationselect.h
 )
