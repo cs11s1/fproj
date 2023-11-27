@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include <limits>
+
 void ticket();
 void ReloadBalance();
 void MainMenu();

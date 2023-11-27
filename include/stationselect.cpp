@@ -23,6 +23,13 @@ vector<string> StationSelect()
     cout << "Station: ";
     cin >> stn;
 
+    if (cin.fail()) // check if input is not a number
+    {
+        cin.clear();                                         // clear the error flags
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+        stn = 777;
+    }
+
     if (stn == 727)
     {
         cout << "wysi :tf:";
@@ -41,6 +48,13 @@ vector<string> StationSelect()
         cout << "\nChoose Origin Station: ";
         cin >> dest;
 
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            dest = 777;
+        }
+
         switch (dest)
         {
         case 1:
@@ -166,7 +180,7 @@ vector<string> StationSelect()
         default:
         {
             cout << "Invalid Location";
-            StationSelect();
+            return StationSelect();
         }
         break;
         }
@@ -183,6 +197,13 @@ vector<string> StationSelect()
         cout << "\nChoose Origin Station: ";
         cin >> dest;
 
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            dest = 777;
+        }
+
         switch (dest)
         {
         case 1:
@@ -266,7 +287,7 @@ vector<string> StationSelect()
         default:
         {
             cout << "Invalid Location";
-            StationSelect();
+            return StationSelect();
         }
         break;
         }
@@ -283,6 +304,13 @@ vector<string> StationSelect()
         cout << "\nChoose Origin Station: ";
         cin >> dest;
 
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            dest = 777;
+        }
+
         switch (dest)
         {
         case 1:
@@ -366,7 +394,7 @@ vector<string> StationSelect()
         default:
         {
             cout << "Invalid Location";
-            StationSelect();
+            return StationSelect();
         }
         break;
         } // end of dest switch
@@ -374,7 +402,7 @@ vector<string> StationSelect()
     break; // end of case
 
     default:
-        StationSelect();
+        return StationSelect();
         break;
     }
 
@@ -388,6 +416,13 @@ vector<string> StationSelect()
         }
         cout << "\nChoose Destination Station: ";
         cin >> dest2;
+
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            dest2 = 777;
+        }
 
         switch (dest2)
         {
@@ -514,7 +549,7 @@ vector<string> StationSelect()
         default:
         {
             cout << "Invalid Location";
-            StationSelect();
+            return StationSelect();
         }
         break;
         }
@@ -530,6 +565,13 @@ vector<string> StationSelect()
         cout << "\nChoose Destination Station: ";
         cin >> dest2;
 
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            dest2 = 777;
+        }
+
         switch (dest2)
         {
         case 1:
@@ -613,7 +655,7 @@ vector<string> StationSelect()
         default:
         {
             cout << "Invalid Location";
-            StationSelect();
+            return StationSelect();
         }
         break;
         }
@@ -629,6 +671,13 @@ vector<string> StationSelect()
         cout << "\nChoose Destination Station: ";
         cin >> dest2;
 
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            dest2 = 777;
+        }
+
         switch (dest2)
         {
         case 1:
@@ -712,7 +761,7 @@ vector<string> StationSelect()
         default:
         {
             cout << "Invalid Location";
-            StationSelect();
+            return StationSelect();
         }
         break;
         } // end of dest switch
@@ -729,17 +778,18 @@ vector<string> StationSelect()
         stats.push_back(save2);
         int locationDistance = abs(dest - dest2);
         stats.push_back(to_string(locationDistance));
+
         return stats;
     }
     else if (conf == "N" || conf == "n")
     {
-        StationSelect();
+        return StationSelect();
         // cout << "Returning...";
     }
     else
     {
         conf = 'b';
-        StationSelect();
+        return StationSelect();
         // cout << "Invalid Input";
     }
 }

@@ -9,16 +9,18 @@ User letUser;
 bool loggedIn = true;
 int billTotal = 0;
 
-void MainMenu(){
+void MainMenu()
+{
     int options;
-    cout << "Train Ticketing System" << endl << endl;
+    cout << "Train Ticketing System" << endl
+         << endl;
 
     cout << "Options: " << endl;
     cout << "[1] Purchase a Ticket" << endl;
     cout << "[2] " << (loggedIn ? "Manage Account" : "Log In") << endl;
     cout << (loggedIn ? "[3] Reload Balance\n\n" : "\n");
     // cout << "[4] Buy Beep Card (Out of Stock)" << endl;
-    
+
     if (billTotal > 0)
     {
         cout << "Total to Pay: " << billTotal << endl;
@@ -27,27 +29,39 @@ void MainMenu(){
     cout << "Account Balance: " << letUser.balance << endl;
     cout << "Insert Option Number: ";
     cin >> options;
-    switch (options){
-        case 1: 
-            billTotal += TicketSummary(); 
-            MainMenu();
-            break;
-        case 2: 
-            Login();
-            break;
-        case 3:
-            ReloadBalance();
-            break;
-        case 4: 
-            break;
-        default: 
-            cout << "Invalid Option" << endl;
-            break;
+
+    if (cin.fail())                                          // check if input is not a number
+    {
+        cin.clear();                                         // clear the error flags
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+        options = 727;
     }
-    cout << endl << "Transaction Success!!! Thank you come again!!";
+
+    switch (options)
+    {
+    case 1:
+        billTotal += TicketSummary();
+        MainMenu();
+        break;
+    case 2:
+        Login();
+        break;
+    case 3:
+        ReloadBalance();
+        break;
+    case 4:
+        break;
+    default:
+        cout << "Invalid Option" << endl;
+        MainMenu();
+        break;
+    }
+    cout << endl
+         << "Transaction Success!!! Thank you come again!!";
 }
 
-void ReloadBalance(){
+void ReloadBalance()
+{
     int balance = 1, newBalance, load;
     char op;
 
@@ -59,24 +73,24 @@ void ReloadBalance(){
     // cout << "Current Card Balance: " << balance << endl;
     // cout << "Balance After Reload: " << newBalance << endl;
     cin >> op;
-    
-    switch (op){
-        case 'Y':
-        case 'y':
-            letUser.balance += load;
-            // balance = newBalance;
-            cout << "Reload Successful!" << endl;
-            MainMenu();
-            break;
-        case 'N':
-        case 'n':
-            cout << "Leaving...";
-            MainMenu();
-            break;
-        default:
-            cout << "Invalid";
-            MainMenu();
-            break;
+
+    switch (op)
+    {
+    case 'Y':
+    case 'y':
+        letUser.balance += load;
+        // balance = newBalance;
+        cout << "Reload Successful!" << endl;
+        MainMenu();
+        break;
+    case 'N':
+    case 'n':
+        cout << "Leaving...";
+        MainMenu();
+        break;
+    default:
+        cout << "Invalid";
+        MainMenu();
+        break;
     }
 }
-

@@ -9,12 +9,23 @@ int TicketSummary()
     int intChoice, ticketPrice, totalPrice;
     bool valChoice = false;
 
-    ticketPrice = (15 + 5 * (stoi(stations[2])-1)); 
-    cout << "Ticket Price - " << ticketPrice << endl; 
+    int tripDistance = stoi(stations[2]);
+    // PROTOTYPE
+    ticketPrice = (15 + (5 * (tripDistance == 1 ? 0 : (tripDistance == 2 ? 1 : tripDistance / 3))));
+    // if 1 = 15, if 2,3 = 20, higher is /3;
+    cout << "Ticket Price - " << ticketPrice << endl;
 
-    while (!valChoice){
+    while (!valChoice)
+    {
         cout << "How many would you like to buy?: ";
         cin >> intChoice;
+
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            intChoice = -1;
+        }
 
         if (intChoice < 0)
         {
