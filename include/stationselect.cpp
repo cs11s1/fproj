@@ -16,6 +16,7 @@ vector<string> StationSelect()
     vector<string> stats; // Array to be returned
 
     cout << "\nSelect Station: " << endl;
+    cout << "0. Return to Main Menu" << endl;
     for (z = 0; z < 3; z++)
     {
         cout << num[z] << line[z] << endl;
@@ -34,6 +35,13 @@ vector<string> StationSelect()
     {
         cout << "wysi :tf:";
     }
+    if (stn == 0)
+    {
+        stats.push_back("cancel");
+        cout << endl << endl;
+        return stats;
+    }
+
     switch (stn)
     {
 
@@ -179,7 +187,7 @@ vector<string> StationSelect()
 
         default:
         {
-            cout << "Invalid Location";
+            cout << "Invalid Location" << endl;
             return StationSelect();
         }
         break;
@@ -286,7 +294,7 @@ vector<string> StationSelect()
 
         default:
         {
-            cout << "Invalid Location";
+            cout << "Invalid Location" << endl;
             return StationSelect();
         }
         break;
@@ -393,7 +401,7 @@ vector<string> StationSelect()
 
         default:
         {
-            cout << "Invalid Location";
+            cout << "Invalid Location" << endl;
             return StationSelect();
         }
         break;
@@ -548,7 +556,7 @@ vector<string> StationSelect()
 
         default:
         {
-            cout << "Invalid Location";
+            cout << "Invalid Location" << endl;
             return StationSelect();
         }
         break;
@@ -654,7 +662,7 @@ vector<string> StationSelect()
 
         default:
         {
-            cout << "Invalid Location";
+            cout << "Invalid Location" << endl;
             return StationSelect();
         }
         break;
@@ -760,14 +768,20 @@ vector<string> StationSelect()
 
         default:
         {
-            cout << "Invalid Location";
+            cout << "Invalid Location" << endl;
             return StationSelect();
         }
         break;
         } // end of dest switch
     }
 
-    cout << "Is this correct? [Y/N]" << endl;
+    if (dest == dest2)
+    {
+        cout << "Origin and Destination cannot be the same!" << endl;
+        return StationSelect();
+    }
+
+    cout << "\nIs this correct? [Y/N]" << endl;
     cout << "From: " << save << "\nto: " << save2 << endl;
     cout << "Confirm: ";
     cin >> conf;

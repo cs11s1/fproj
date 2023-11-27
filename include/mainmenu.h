@@ -7,4 +7,5 @@
 
 void ticket();
 void ReloadBalance();
+void PayBill();
 void MainMenu();

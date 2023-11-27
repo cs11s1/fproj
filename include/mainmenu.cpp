@@ -6,62 +6,75 @@
 using namespace std;
 
 User letUser;
-bool loggedIn = true;
+bool loggedIn = false;
+bool active = true;
 int billTotal = 0;
 
 void MainMenu()
 {
-    int options;
-    cout << "Train Ticketing System" << endl
-         << endl;
-
-    cout << "Options: " << endl;
-    cout << "[1] Purchase a Ticket" << endl;
-    cout << "[2] " << (loggedIn ? "Manage Account" : "Log In") << endl;
-    cout << (loggedIn ? "[3] Reload Balance\n\n" : "\n");
-    // cout << "[4] Buy Beep Card (Out of Stock)" << endl;
-
-    if (billTotal > 0)
+    if (active)
     {
-        cout << "Total to Pay: " << billTotal << endl;
-    }
+        int options;
+        cout << "-- Train Ticketing System --" << endl
+             << endl;
 
-    cout << "Account Balance: " << letUser.balance << endl;
-    cout << "Insert Option Number: ";
-    cin >> options;
+        cout << "Options: " << endl;
+        cout << "[1] Purchase a Ticket" << endl;
+        cout << "[2] " << (loggedIn ? "Sign Out" : "Log In") << endl;
+        cout << (loggedIn ? "[3] Reload Balance\n\n" : "\n");
+        // cout << "[4] Buy Beep Card (Out of Stock)" << endl;
 
-    if (cin.fail())                                          // check if input is not a number
-    {
-        cin.clear();                                         // clear the error flags
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
-        options = 727;
-    }
+        if (billTotal > 0)
+        {
+            cout << "[4] Pay Total Bill" << endl << endl;
+            cout << "Total to Pay: P" << billTotal << endl;
+        }
 
-    switch (options)
-    {
-    case 1:
-        billTotal += TicketSummary();
-        MainMenu();
-        break;
-    case 2:
-        Login();
-        break;
-    case 3:
-        ReloadBalance();
-        break;
-    case 4:
-        break;
-    default:
-        cout << "Invalid Option" << endl;
-        MainMenu();
-        break;
+        if (loggedIn)
+        {
+            cout << "Account Balance: P" << letUser.balance << endl;
+        }
+
+        cout << "Insert Option Number: ";
+        cin >> options;
+
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            options = 727;
+        }
+
+        switch (options)
+        {
+        case 1:
+            billTotal += TicketSummary();
+            MainMenu();
+            break;
+        case 2:
+            Login();
+            break;
+        case 3:
+            ReloadBalance();
+            break;
+        case 4:
+            PayBill();
+            break;
+        default:
+            cout << "Invalid Option" << endl << endl;
+            MainMenu();
+            break;
+        }
     }
-    cout << endl
-         << "Transaction Success!!! Thank you come again!!";
+    // TODO: Fix recursion call here.
 }
 
 void ReloadBalance()
 {
+    if (!loggedIn)
+    {
+        return;
+    }
     int balance = 1, newBalance, load;
     char op;
 
@@ -93,4 +106,37 @@ void ReloadBalance()
         MainMenu();
         break;
     }
+}
+
+void PayBill()
+{
+    if (billTotal <= 0)
+    {
+        return;
+    }
+
+    int userInput, userPayment, userChange;
+
+    cout << "\n\tAmount to Pay: P" << billTotal;
+    cout << "\n\t\tEnter Payment Amount: ";
+    cin >> userInput;
+    if (userInput < billTotal)
+    {
+        cout << "\n\t* You do not have enough to complete this transaction. Exiting Program... *\n";
+        active = false;
+        return;
+    }
+
+    userPayment = userInput;
+
+    userChange = userPayment - billTotal;
+
+    if (userChange != 0)
+    {
+        cout << "\n\tChange: P" << userChange << endl;
+    }
+
+    cout << "\n\t* Transaction successful! Exiting Program... *\n";
+    active = false;
+    return;
 }

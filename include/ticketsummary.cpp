@@ -5,6 +5,7 @@ using namespace std;
 int TicketSummary()
 {
     vector<string> stations = StationSelect();
+    if (stations[0] == "cancel") {return 0;}
     string stringChoice;
     int intChoice, ticketPrice, totalPrice;
     bool valChoice = false;
@@ -13,7 +14,7 @@ int TicketSummary()
     // PROTOTYPE
     ticketPrice = (15 + (5 * (tripDistance == 1 ? 0 : (tripDistance == 2 ? 1 : tripDistance / 3))));
     // if 1 = 15, if 2,3 = 20, higher is /3;
-    cout << "Ticket Price - " << ticketPrice << endl;
+    cout << "[Ticket Price] - P" << ticketPrice << endl;
 
     while (!valChoice)
     {
@@ -31,6 +32,11 @@ int TicketSummary()
         {
             cout << "Invalid Amount!" << endl;
         }
+        else if (intChoice == 0)
+        {
+            cout << endl << endl;
+            return 0;
+        }
         else
         {
             valChoice = true;
@@ -40,15 +46,16 @@ int TicketSummary()
     valChoice = false;
     totalPrice = ticketPrice * intChoice;
 
+    cout << endl;
     cout << "+-------------------------------------------------+" << endl;
     cout << " Ticket Summary                                  " << endl;
     cout << "  Your Selected Origin is: " << stations[0] << endl;
     cout << "  Your Selected Destination is: " << stations[1] << endl;
     cout << "  Quantity: " << intChoice << endl;
     cout << "                                                 " << endl;
-    cout << " Your Total Bill is: " << totalPrice << endl;
+    cout << " Your Total Bill is: P" << totalPrice << endl;
     cout << "+-------------------------------------------------+" << endl;
-    cout << "\nDo You Want to Proceed? [Y/N]" << endl;
+    cout << "\nDo you want to add this to your cart? [Y/N]" << endl;
     // cout << "1. Yes" << endl;
     // cout << "2. No" << endl;
     while (!valChoice)
@@ -57,13 +64,13 @@ int TicketSummary()
         cin >> stringChoice;
         if (stringChoice == "Y" || stringChoice == "y")
         {
-            cout << "Adding to cart..." << endl;
+            cout << "Adding to cart...\n\n" << endl;
             valChoice = true;
             return totalPrice;
         }
         else if (stringChoice == "N" || stringChoice == "n")
         {
-            cout << "Transaction Cancelled." << endl;
+            cout << "Transaction Cancelled.\n\n" << endl;
             valChoice = true;
         }
         else
