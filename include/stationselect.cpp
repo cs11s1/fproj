@@ -2,18 +2,18 @@
 
 using namespace std;
 
-string* StationSelect()
+vector<string> StationSelect()
 {
     int stn, x, y, z, no, dest, stn2, dest2;
     string conf;
     string save, saveout, saveout2, saveloc, save2, confirans;
     string selLine[1];
     string line[3] = {"LRT1", "LRT2", "MRT3"};
-    string stats[3];
     string num[20] = {"1. ", "2. ", "3. ", "4. ", "5. ", "6. ", "7. ", "8. ", "9. ", "10. ", "11. ", "12. ", "13. ", "14. ", "15. ", "16. ", "17. ", "18. ", "19. ", "20. "};
     string LRT1[20] = {"Roosevelt", "Balintawak", "Yamaha Monumento", "5th Avenue", "R. Papa", "Abad Santos", "Bluementritt", "Tayuman", "Bambang", "Doroteo Jose", "Carriedo", "Central Terminal", "United Nations", "Pedro Gil", "Quirino", "Vito Cruz", "Gil Puyat", "Libertad", "EDSA", "Baclaran"};
     string LRT2[13] = {"Recto", "Legarda", "Pureza", "V. Mapa", "J. Ruiz", "Gilmore", "Betty Go", "Cubao", "Anonas", "Katipunan", "Santolan", "Marikina", "Antipolo"};
     string MRT3[13] = {"North Avenue", "Quezon Avenue", "Kamuning", "Cubao", "Santolan Anapolis", "Ortigas", "Shaw Boulevard", "Boni Ave", "Guadalupe", "Buendia", "Ayala Ave", "Magallanes", "Taft"};
+    vector<string> stats; // Array to be returned
 
     cout << "\nSelect Station: " << endl;
     for (z = 0; z < 3; z++)
@@ -32,7 +32,7 @@ string* StationSelect()
 
     case 1:
     {
-        cout << "\nStation:" << line[stn - 1] << endl;
+        cout << "\nStation: " << line[stn - 1] << endl;
 
         for (x = 0; x < 20; x++)
         {
@@ -175,7 +175,7 @@ string* StationSelect()
 
     case 2:
     {
-        cout << "\nStation:" << line[stn - 1] << endl;
+        cout << "\nStation: " << line[stn - 1] << endl;
         for (x = 0; x < 13; x++)
         {
             cout << num[x] << " " << LRT2[x] << endl;
@@ -275,7 +275,7 @@ string* StationSelect()
 
     case 3:
     {
-        cout << "\nStation:" << line[stn - 1] << endl;
+        cout << "\nStation: " << line[stn - 1] << endl;
         for (x = 0; x < 13; x++)
         {
             cout << num[x] << " " << MRT3[x] << endl;
@@ -380,7 +380,7 @@ string* StationSelect()
 
     if (stn == 1)
     {
-        cout << "\nStation:" << line[stn - 1] << endl;
+        cout << "\nStation: " << line[stn - 1] << endl;
 
         for (x = 0; x < 20; x++)
         {
@@ -522,7 +522,7 @@ string* StationSelect()
 
     else if (stn == 2)
     {
-        cout << "\nStation:" << line[stn - 1] << endl;
+        cout << "\nStation: " << line[stn - 1] << endl;
         for (x = 0; x < 13; x++)
         {
             cout << num[x] << " " << LRT2[x] << endl;
@@ -621,7 +621,7 @@ string* StationSelect()
 
     else if (stn == 3)
     {
-        cout << "\nStation:" << line[stn - 1] << endl;
+        cout << "\nStation: " << line[stn - 1] << endl;
         for (x = 0; x < 13; x++)
         {
             cout << num[x] << " " << MRT3[x] << endl;
@@ -725,8 +725,10 @@ string* StationSelect()
 
     if (conf == "Y" || conf == "y")
     {
-        stats[0] = save;
-        stats[1] = save2;
+        stats.push_back(save);
+        stats.push_back(save2);
+        int locationDistance = abs(dest - dest2);
+        stats.push_back(to_string(locationDistance));
         return stats;
     }
     else if (conf == "N" || conf == "n")

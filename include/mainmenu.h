@@ -4,5 +4,5 @@
 #include <string>
 
 void ticket();
-void reload();
+void ReloadBalance();
 void MainMenu();
