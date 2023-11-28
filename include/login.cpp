@@ -52,7 +52,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
     {
         _currentUser.balance = 0;
         _loggedIn = false;
-        cout << "Successfully signed out." << endl;
+        cout << "Successfully signed out.\n" << endl;
         return;
     }
 
@@ -81,7 +81,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
     {
         string username, password;
 
-        cout << "\nRegistration: " << endl;
+        cout << "\n[Registration] " << endl;
         cout << endl;
         cout << "Enter a username: ";
         cin >> username;
