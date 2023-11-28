@@ -1,18 +1,21 @@
 #include "mainmenu.h"
 #include "login.h"
-// #include "stationselect.h"
 #include "ticketsummary.h"
 #include "user.h"
+#include "utils.h"
+// #include "stationselect.h"
+
 using namespace std;
 
-User letUser;
+User currentUser;
+vector<User> userList = SReadDFile();
 bool loggedIn = false;
 bool active = true;
 int billTotal = 0;
 
 void MainMenu()
 {
-    if (active)
+    while (active)
     {
         int options;
         cout << "-- Train Ticketing System --" << endl
@@ -20,22 +23,23 @@ void MainMenu()
 
         cout << "Options: " << endl;
         cout << "[1] Purchase a Ticket" << endl;
-        cout << "[2] " << (loggedIn ? "Sign Out" : "Log In") << endl;
+        cout << "[2] " << (loggedIn ? "Sign Out" : "Account") << endl;
         cout << (loggedIn ? "[3] Reload Balance\n\n" : "\n");
         // cout << "[4] Buy Beep Card (Out of Stock)" << endl;
 
         if (billTotal > 0)
         {
-            cout << "[4] Pay Total Bill" << endl << endl;
+            cout << "[4] Pay Total Bill" << endl
+                 << endl;
             cout << "Total to Pay: P" << billTotal << endl;
         }
 
         if (loggedIn)
         {
-            cout << "Account Balance: P" << letUser.balance << endl;
+            cout << "Account Balance: P" << currentUser.balance << endl;
         }
 
-        cout << "Insert Option Number: ";
+        cout << "(Insert Option Number): ";
         cin >> options;
 
         if (cin.fail()) // check if input is not a number
@@ -52,7 +56,7 @@ void MainMenu()
             MainMenu();
             break;
         case 2:
-            Login();
+            Login(userList, loggedIn, currentUser);
             break;
         case 3:
             ReloadBalance();
@@ -61,7 +65,8 @@ void MainMenu()
             PayBill();
             break;
         default:
-            cout << "Invalid Option" << endl << endl;
+            cout << "Invalid Option" << endl
+                 << endl;
             MainMenu();
             break;
         }
@@ -73,6 +78,7 @@ void ReloadBalance()
 {
     if (!loggedIn)
     {
+        cout << endl;
         return;
     }
     int balance = 1, newBalance, load;
@@ -80,7 +86,21 @@ void ReloadBalance()
 
     cout << "Include the amount you want to reload... " << endl;
     cin >> load;
+
+    if (cin.fail()) // check if input is not a number
+    {
+        cin.clear();                                         // clear the error flags
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+        load = -1;
+    }
+    
     // newBalance = balance + load;
+    if (load < 0)
+    {
+        cout << "\nInvalid Input\n"
+             << endl;
+        return;
+    }
 
     cout << "Do you want to Reload " << load << " php to your card? (Y/N)" << endl;
     // cout << "Current Card Balance: " << balance << endl;
@@ -91,18 +111,18 @@ void ReloadBalance()
     {
     case 'Y':
     case 'y':
-        letUser.balance += load;
+        UpdateBalance(userList, currentUser, load);
         // balance = newBalance;
         cout << "Reload Successful!" << endl;
         MainMenu();
         break;
     case 'N':
     case 'n':
-        cout << "Leaving...";
+        cout << "Leaving...\n" << endl;
         MainMenu();
         break;
     default:
-        cout << "Invalid";
+        cout << "Invalid\n" << endl;
         MainMenu();
         break;
     }
@@ -112,6 +132,7 @@ void PayBill()
 {
     if (billTotal <= 0)
     {
+        cout << endl;
         return;
     }
 
@@ -120,10 +141,21 @@ void PayBill()
     cout << "\n\tAmount to Pay: P" << billTotal;
     cout << "\n\t\tEnter Payment Amount: ";
     cin >> userInput;
+
+    if (cin.fail()) // check if input is not a number
+    {
+        cin.clear();                                         // clear the error flags
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+        cout << "\tInvalid Input!\n"
+             << endl;
+        return;
+    }
+
     if (userInput < billTotal)
     {
         cout << "\n\t* You do not have enough to complete this transaction. Exiting Program... *\n";
         active = false;
+        WriteDFile(userList);
         return;
     }
 
@@ -138,5 +170,6 @@ void PayBill()
 
     cout << "\n\t* Transaction successful! Exiting Program... *\n";
     active = false;
+    WriteDFile(userList);
     return;
 }
