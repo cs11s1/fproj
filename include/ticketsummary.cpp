@@ -14,7 +14,7 @@ int TicketSummary()
     // PROTOTYPE
     ticketPrice = (15 + (5 * (tripDistance == 1 ? 0 : (tripDistance == 2 ? 1 : tripDistance / 3))));
     // if 1 = 15, if 2,3 = 20, higher is /3;
-    cout << "[Ticket Price] - P" << ticketPrice << endl;
+    cout << "\n[Ticket Price] - P" << ticketPrice << endl;
 
     while (!valChoice)
     {

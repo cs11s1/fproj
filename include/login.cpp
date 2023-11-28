@@ -12,9 +12,9 @@ bool isLoggedIn(User &_logUser)
     string username, password;
     // string un, pw; // comparison strings
 
-    cout << "Enter a username: ";
+    cout << "Enter username: ";
     cin >> username;
-    cout << "Enter a password: ";
+    cout << "Enter password: ";
     cin >> password;
 
     for (User &user : *login_userList)
@@ -31,6 +31,19 @@ bool isLoggedIn(User &_logUser)
 
 }
 
+bool CheckUserExists(string registerName)
+{
+    for (User &user : *login_userList)
+    {
+        if (user.name == registerName)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
 {
     login_userList = &_userList;
@@ -39,7 +52,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
     {
         _currentUser.balance = 0;
         _loggedIn = false;
-        cout << endl;
+        cout << "Successfully signed out." << endl;
         return;
     }
 
@@ -59,7 +72,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
     {
         cin.clear();                                         // clear the error flags
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
-        cout << "Invalid Choice\n" << endl;
+        cout << "\nInvalid Choice" << endl;
         Login(_userList, _loggedIn, _currentUser);
         // choice = 727;
     }
@@ -68,19 +81,27 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
     {
         string username, password;
 
-        cout << "Registration: " << endl;
+        cout << "\nRegistration: " << endl;
         cout << endl;
-        cout << "Select a username: ";
+        cout << "Enter a username: ";
         cin >> username;
-        cout << "Select a password: ";
+        
+        // todo: id instead of name
+        if (CheckUserExists(username))
+        {
+            cout << "A user with this name already exists!" << endl;
+            Login(_userList, _loggedIn, _currentUser);
+        }
+
+        cout << "Enter a password: ";
         cin >> password;
 
         _currentUser.name = username;
         _currentUser.pw = password;
         _currentUser.balance = 0;
 
-        cout << "Successfully registered!" << endl;
-        cout << "Welcome " << _currentUser.name << "!" << endl;
+        cout << "\nSuccessfully registered!" << endl;
+        cout << "Welcome " << _currentUser.name << "!\n" << endl;
         _userList.push_back(_currentUser);
         // _currentUser = newUser;
         _loggedIn = true;
@@ -99,7 +120,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
         }
         else // if isLoggedIn() returns true, the dashboard is displayed
         {
-            cout << "Successfully logged in!" << endl;
+            cout << "\nSuccessfully logged in!" << endl;
             cout << "Welcome " << _username << "!" << endl;
             cout << endl;
             _loggedIn = true;
@@ -126,6 +147,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
     }
     else if (choice == 0)
     {
+        cout << endl;
         return;
     }
 }

@@ -49,7 +49,7 @@ void UpdateBalance(std::vector<User> &userList, User &currentUser, int valueToAd
     {
         if (user.name == currentUser.name)
         {
-            user.balance = valueToAdd;
+            user.balance += valueToAdd;
             break;
         }
     }

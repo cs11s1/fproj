@@ -29,9 +29,8 @@ void MainMenu()
 
         if (billTotal > 0)
         {
-            cout << "[4] Pay Total Bill" << endl
-                 << endl;
-            cout << "Total to Pay: P" << billTotal << endl;
+            cout << "[4] Pay Total Bill" << endl;
+            cout << "Total to Pay: P" << billTotal << endl << endl;
         }
 
         if (loggedIn)
@@ -93,7 +92,7 @@ void ReloadBalance()
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
         load = -1;
     }
-    
+
     // newBalance = balance + load;
     if (load < 0)
     {
@@ -102,7 +101,7 @@ void ReloadBalance()
         return;
     }
 
-    cout << "Do you want to Reload " << load << " php to your card? (Y/N)" << endl;
+    cout << "Do you want to Reload P" << load << " to your card? (Y/N)" << endl;
     // cout << "Current Card Balance: " << balance << endl;
     // cout << "Balance After Reload: " << newBalance << endl;
     cin >> op;
@@ -114,15 +113,18 @@ void ReloadBalance()
         UpdateBalance(userList, currentUser, load);
         // balance = newBalance;
         cout << "Reload Successful!" << endl;
+        WriteDFile(userList);
         MainMenu();
         break;
     case 'N':
     case 'n':
-        cout << "Leaving...\n" << endl;
+        cout << "Leaving...\n"
+             << endl;
         MainMenu();
         break;
     default:
-        cout << "Invalid\n" << endl;
+        cout << "Invalid\n"
+             << endl;
         MainMenu();
         break;
     }
@@ -136,11 +138,41 @@ void PayBill()
         return;
     }
 
+    string s_userInput;
     int userInput, userPayment, userChange;
+    bool useBalance = false;
 
     cout << "\n\tAmount to Pay: P" << billTotal;
-    cout << "\n\t\tEnter Payment Amount: ";
-    cin >> userInput;
+    cout << "\n\tAvail [Senior/PWD/Student] Discount? (Y/N): ";
+    cin >> s_userInput;
+    if (s_userInput == "Y" || s_userInput == "y")
+    {
+        billTotal -= (int)((double)billTotal * 0.20);
+        cout << "\n\tFinal Amount to Pay: P" << billTotal;
+    }
+
+    if (loggedIn && currentUser.balance >= billTotal)
+    {
+        cout << "\n\tWould you like to use your account balance for this transaction? (Y/N): ";
+        cin >> s_userInput;
+        if (s_userInput == "Y" || s_userInput == "y")
+        {
+            UpdateBalance(userList, currentUser, -billTotal);
+            cout << "\n\tP" << billTotal << " deducted from your balance.";
+            cout << "\n\tNew balance: P" << currentUser.balance; 
+            cout << "\n\n\t* Transaction successful! Exiting Program... *\n";
+            active = false;
+            WriteDFile(userList);
+            useBalance = true;
+            return;
+        }
+    }
+
+    if (!useBalance)
+    {
+        cout << "\n\tEnter Payment Amount: ";
+        cin >> userInput;
+    }
 
     if (cin.fail()) // check if input is not a number
     {
@@ -165,7 +197,7 @@ void PayBill()
 
     if (userChange != 0)
     {
-        cout << "\n\tChange: P" << userChange << endl;
+        cout << "\n\nChange: P" << userChange << endl;
     }
 
     cout << "\n\t* Transaction successful! Exiting Program... *\n";
