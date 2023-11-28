@@ -13,4 +13,6 @@ add_executable(fproj src/main.cpp
         include/stationselect.cpp
         include/ticketsummary.h
         include/ticketsummary.cpp
+        include/utils.h
+        include/utils.cpp
 )
