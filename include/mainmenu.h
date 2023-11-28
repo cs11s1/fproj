@@ -1,5 +1,12 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include <limits>
+
 void ticket();
-void reload();
+void ReloadBalance();
+void PayBill();
 void MainMenu();

@@ -1,148 +1,207 @@
-#include <iostream>
-#include <string>
 #include "mainmenu.h"
+#include "login.h"
+#include "ticketsummary.h"
+#include "user.h"
+#include "utils.h"
+// #include "stationselect.h"
+
 using namespace std;
 
-void ticket(){
-    string lrt[] = {"Roosevelt", "Balintawak", "Yamaha Monumento", "5th Avenue", "R. Papa", "Abad Santos", "Bluementritt", "Tayuman", "Bambang", "Doroteo Jose", "Carriedo", "Central Terminal", "United Nations", "Pedro Gil", "Quirino", "Vito Cruz", "Gil Puyat", "Libertad", "EDSA", "Baclaran"};
-    string lrt2[] = {"Recto", "Legarda", "Pureza", "V. Mapa", "J. Ruiz", "Gilmore", "Betty Go", "Cubao", "Anonas", "Katipunan", "Santolan", "Marikina-Pasig", "Antipolo"};
-    string mrt[] = {"North Avenue", "Quezon Avenue", "Kamuning", "Araneta Center (Cubao)", "Santolan (Annapolis)", "Ortigas", "Shaw Boulevard", "Boni", "Guadalupe", "Buendia", "Ayala", "Magallanes", "Taft Avenue"};
-    int lrt2Count = 13;
-    int lrtCount = 20;
-    int mrtCount = 13;
-    int line, orig = 0, selec = 1;
+User currentUser;
+vector<User> userList = SReadDFile();
+bool loggedIn = false;
+bool active = true;
+int billTotal = 0;
 
-    do{
-        cout << endl << "Select a train line: "<< endl;
-        cout << "[1] LRT-1"<< endl;
-        cout << "[2] LRT-2"<< endl;
-        cout << "[3] MRT"<< endl;
-        cout << "Insert Line Number: ";
-        cin >> line;
-        switch(line){
+void MainMenu()
+{
+    while (active)
+    {
+        int options;
+        cout << "-- Train Ticketing System --" << endl
+             << endl;
+
+        cout << "Options: " << endl;
+        cout << "[1] Purchase a Ticket" << endl;
+        cout << "[2] " << (loggedIn ? "Sign Out" : "Account") << endl;
+        cout << (loggedIn ? "[3] Reload Balance\n\n" : "\n");
+        // cout << "[4] Buy Beep Card (Out of Stock)" << endl;
+
+        if (billTotal > 0)
+        {
+            cout << "[4] Pay Total Bill" << endl;
+            cout << "Total to Pay: P" << billTotal << endl << endl;
+        }
+
+        if (loggedIn)
+        {
+            cout << "Account Balance: P" << currentUser.balance << endl;
+        }
+
+        cout << "(Insert Option Number): ";
+        cin >> options;
+
+        if (cin.fail()) // check if input is not a number
+        {
+            cin.clear();                                         // clear the error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+            options = 727;
+        }
+
+        switch (options)
+        {
         case 1:
-            cout << endl << "LRT-1 Destinations: " << endl;
-            for (int x=0; x<lrtCount; x++){
-                cout << x + 1 << ". " << lrt[x] << endl;
-            }
-            cout << "Insert Station Number: ";
-            cin >> selec;
-
-            cout << endl << "Select your current station: " << endl;
-            for (int x=0; x<lrtCount; x++){
-                cout << x + 1 << ". " << lrt[x] << endl;
-            }
-            cout << "Insert Station Number: ";
-            cin >> orig;
-            if (orig != selec){
-                cout << endl << "Riding Train To: " << lrt[selec-1] << endl;
-                cout << "Riding Train From: " << lrt[orig-1] << endl;
-            }
+            billTotal += TicketSummary();
+            MainMenu();
             break;
         case 2:
-            cout << endl << "LRT-2 Destinations: " << endl;
-            for (int y=0; y<lrt2Count; y++){
-                cout << y + 1 << ". " << lrt2[y] << endl;
-            }
-            cout << "Insert Station Number: ";
-            cin >> selec;
-
-            cout << endl << "Select your current station: " << endl;
-            for (int y=0; y<lrt2Count; y++){
-                cout << y + 1 << ". " << lrt2[y] << endl;
-            }
-            cout << "Insert Station Number: ";
-            cin >> orig;
-            if (orig != selec){
-                cout << endl << "Riding Train To: " << lrt2[selec-1] << endl;
-                cout << "Riding Train From: " << lrt2[orig-1] << endl;
-            }
+            Login(userList, loggedIn, currentUser);
             break;
         case 3:
-            cout << endl << "MRT Destinations: " << endl;
-            for (int z=0; z<mrtCount; z++){
-                cout << z + 1 << ". " << mrt[z] << endl;
-            }
-            cout << "Insert Station Number: ";
-            cin >> selec;
-
-            cout << endl << "Select your current station: " << endl;
-            for (int z=0; z<mrtCount; z++){
-                cout << z + 1 << ". " << mrt[z] << endl;
-            }
-            cout << "Insert Station Number: ";
-            cin >> orig;
-            if (orig != selec){
-                cout << endl << "Riding Train To: " << mrt[selec-1] << endl;
-                cout << "Riding Train From: " << mrt[orig-1] << endl;
-            }
+            ReloadBalance();
+            break;
+        case 4:
+            PayBill();
             break;
         default:
-            cout << "Invalid Option" << endl;
+            cout << "Invalid Option" << endl
+                 << endl;
+            MainMenu();
             break;
         }
-        if (orig == selec){
-            cout << "DESTINATION CANNOT BE THE SAME WITH CURRENT STATION! (ERROR)" << endl << endl;
-        }
-    }while (orig == selec || line > 3);
-    
-}
-
-void MainMenu(){
-    int options;
-    cout << "Train Ticketing System" << endl << endl;
-
-    cout << "Options: " << endl;
-    cout << "[1] Purchase a Ticket"<< endl;
-    cout << "[2] Reload Card Balance"<< endl;
-    cout << "[3] Buy Beep Card (Out of Stock)"<< endl;
-    cout << "[4] Account"<< endl;
-    cout << "Insert Option Number: ";
-    cin >> options;
-    switch (options){
-        case 1: 
-            ticket(); 
-            break;
-        case 2: 
-            reload();
-            break;
-        case 3:
-            cout << "DON'T EXPECT BEEP CARDS EXIST IN THIS TRANSACTION..."; 
-            break;
-        case 4: 
-            break;
-        default: 
-            cout << "Invalid Option" << endl;
-            break;
     }
-    cout << endl << "Transaction Success!!! Thank you come again!!";
+    // TODO: Fix recursion call here.
 }
 
-void reload(){
+void ReloadBalance()
+{
+    if (!loggedIn)
+    {
+        cout << endl;
+        return;
+    }
     int balance = 1, newBalance, load;
     char op;
 
     cout << "Include the amount you want to reload... " << endl;
     cin >> load;
-    newBalance = balance + load;
 
-    cout << "Do you want to Reload Php" << load << " to your card? (Y/N)" << endl;
-    cout << "Current Card Balance: " << balance << endl;
-    cout << "Balance After Reload: " << newBalance << endl;
+    if (cin.fail()) // check if input is not a number
+    {
+        cin.clear();                                         // clear the error flags
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+        load = -1;
+    }
+
+    // newBalance = balance + load;
+    if (load < 0)
+    {
+        cout << "\nInvalid Input\n"
+             << endl;
+        return;
+    }
+
+    cout << "Do you want to Reload P" << load << " to your card? (Y/N)" << endl;
+    // cout << "Current Card Balance: " << balance << endl;
+    // cout << "Balance After Reload: " << newBalance << endl;
     cin >> op;
-    
-    switch (op){
-        case 'Y':
-        case 'y':
-            balance = newBalance;
-            cout << "Reload Successful!" << endl;
-        case 'N':
-        case 'n':
-            cout << "Leaving...";
-            break;
-        default:
-            cout << "Invalid";
-            break;
+
+    switch (op)
+    {
+    case 'Y':
+    case 'y':
+        UpdateBalance(userList, currentUser, load);
+        // balance = newBalance;
+        cout << "Reload Successful!" << endl;
+        WriteDFile(userList);
+        MainMenu();
+        break;
+    case 'N':
+    case 'n':
+        cout << "Leaving...\n"
+             << endl;
+        MainMenu();
+        break;
+    default:
+        cout << "Invalid\n"
+             << endl;
+        MainMenu();
+        break;
     }
 }
 
+void PayBill()
+{
+    if (billTotal <= 0)
+    {
+        cout << endl;
+        return;
+    }
+
+    string s_userInput;
+    int userInput, userPayment, userChange;
+    bool useBalance = false;
+
+    cout << "\n\tAmount to Pay: P" << billTotal;
+    cout << "\n\tAvail [Senior/PWD/Student] Discount? (Y/N): ";
+    cin >> s_userInput;
+    if (s_userInput == "Y" || s_userInput == "y")
+    {
+        billTotal -= (int)((double)billTotal * 0.20);
+        cout << "\n\tFinal Amount to Pay: P" << billTotal;
+    }
+
+    if (loggedIn && currentUser.balance >= billTotal)
+    {
+        cout << "\n\tWould you like to use your account balance for this transaction? (Y/N): ";
+        cin >> s_userInput;
+        if (s_userInput == "Y" || s_userInput == "y")
+        {
+            UpdateBalance(userList, currentUser, -billTotal);
+            cout << "\n\tP" << billTotal << " deducted from your balance.";
+            cout << "\n\tNew balance: P" << currentUser.balance; 
+            cout << "\n\n\t* Transaction successful! Exiting Program... *\n";
+            active = false;
+            WriteDFile(userList);
+            useBalance = true;
+            return;
+        }
+    }
+
+    if (!useBalance)
+    {
+        cout << "\n\tEnter Payment Amount: ";
+        cin >> userInput;
+    }
+
+    if (cin.fail()) // check if input is not a number
+    {
+        cin.clear();                                         // clear the error flags
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
+        cout << "\tInvalid Input!\n"
+             << endl;
+        return;
+    }
+
+    if (userInput < billTotal)
+    {
+        cout << "\n\t* You do not have enough to complete this transaction. Exiting Program... *\n";
+        active = false;
+        WriteDFile(userList);
+        return;
+    }
+
+    userPayment = userInput;
+
+    userChange = userPayment - billTotal;
+
+    if (userChange != 0)
+    {
+        cout << "\n\nChange: P" << userChange << endl;
+    }
+
+    cout << "\n\t* Transaction successful! Exiting Program... *\n";
+    active = false;
+    WriteDFile(userList);
+    return;
+}
