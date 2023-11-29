@@ -202,7 +202,7 @@ void PayBill()
 
     if (userChange != 0)
     {
-        cout << "\n\nChange: P" << userChange << endl;
+        cout << "\n\n\tChange: P" << userChange << endl;
     }
 
     cout << "\n\t* Transaction successful! Exiting Program... *\n";
