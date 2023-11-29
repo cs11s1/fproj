@@ -74,6 +74,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard the row
         cout << "\nInvalid Choice" << endl;
         Login(_userList, _loggedIn, _currentUser);
+        return;
         // choice = 727;
     }
 
@@ -91,6 +92,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
         {
             cout << "A user with this name already exists!" << endl;
             Login(_userList, _loggedIn, _currentUser);
+            return;
         }
 
         cout << "Enter a password: ";
@@ -117,6 +119,7 @@ void Login(std::vector<User> &_userList, bool &_loggedIn, User &_currentUser)
             cout << endl;
             cout << "Invalid login" << endl;
             Login(_userList, _loggedIn, _currentUser);
+            return;
         }
         else // if isLoggedIn() returns true, the dashboard is displayed
         {
