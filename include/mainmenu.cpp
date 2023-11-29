@@ -168,6 +168,11 @@ void PayBill()
         }
     }
 
+    if (loggedIn && currentUser.balance < billTotal)
+    {
+        cout << "\n\tYour balance is insufficient for this transaction, please input cash.";
+    }
+
     if (!useBalance)
     {
         cout << "\n\tEnter Payment Amount: ";
@@ -185,7 +190,7 @@ void PayBill()
 
     if (userInput < billTotal)
     {
-        cout << "\n\t* You do not have enough to complete this transaction. Exiting Program... *\n";
+        cout << "\n\t* You did not provide enough to complete this transaction. Exiting Program... *\n";
         active = false;
         WriteDFile(userList);
         return;
