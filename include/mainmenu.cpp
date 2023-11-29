@@ -83,7 +83,7 @@ void ReloadBalance()
     int balance = 1, newBalance, load;
     char op;
 
-    cout << "Include the amount you want to reload... " << endl;
+    cout << "Enter the amount you want to reload... " << endl;
     cin >> load;
 
     if (cin.fail()) // check if input is not a number
