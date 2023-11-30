@@ -83,7 +83,7 @@ void ReloadBalance()
     int balance = 1, newBalance, load;
     char op;
 
-    cout << "Include the amount you want to reload... " << endl;
+    cout << "Enter the amount you want to reload... " << endl;
     cin >> load;
 
     if (cin.fail()) // check if input is not a number
@@ -168,6 +168,11 @@ void PayBill()
         }
     }
 
+    if (loggedIn && currentUser.balance < billTotal)
+    {
+        cout << "\n\tYour balance is insufficient for this transaction, please input cash.";
+    }
+
     if (!useBalance)
     {
         cout << "\n\tEnter Payment Amount: ";
@@ -185,7 +190,7 @@ void PayBill()
 
     if (userInput < billTotal)
     {
-        cout << "\n\t* You do not have enough to complete this transaction. Exiting Program... *\n";
+        cout << "\n\t* You did not provide enough to complete this transaction. Exiting Program... *\n";
         active = false;
         WriteDFile(userList);
         return;
@@ -197,7 +202,7 @@ void PayBill()
 
     if (userChange != 0)
     {
-        cout << "\n\nChange: P" << userChange << endl;
+        cout << "\n\n\tChange: P" << userChange << endl;
     }
 
     cout << "\n\t* Transaction successful! Exiting Program... *\n";
